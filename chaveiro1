@@ -61,8 +61,10 @@ body {
   <span class="arrow right" onclick="next()">❯</span>
 
   <!-- COLE SUAS IMAGENS AQUI -->
-  <img src="LINK-DA-FOTO-1" class="active">
-  <img src="LINK-DA-FOTO-2">
+  <img src="https://lh3.googleusercontent.com/pw/AP1GczNds4SH4vXRluUddqoNHUGOPJxrl4nAIElYW9OOu01OHVKgTzNOq2TnFxTz2xrn5gbr8S6mxQqJmJYg-rBMt9gpvsoZxsYGL1sQmU56xQym5p80dxNlYmB9UniWTtI8KOixJGT7TihZMf70c4SD-g70=w936-h936-s-no?authuser=0
+" class="active">
+  <img src="https://lh3.googleusercontent.com/pw/AP1GczOzTGPSZa3PDJ8dfDDLLym17foZwyQWql2J7XOn398IOklq5rZSv1odfZ21NNboGWi2lL3HYgo3EROJtLYCurOvB2MCTqiqJVL9RgAeYrTF0vb4xW4uvkE9-rk10zctfgFOfRqUnCR4XxWH5cf2FFei=w936-h936-s-no?authuser=0
+">
 </div>
 
 <script>
