@@ -21,7 +21,7 @@ body {
   margin: auto;
   overflow: hidden;
   border-radius: 12px;
-  aspect-ratio: 1 / 1; /* garantindo altura correta */
+  aspect-ratio: 1 / 1;
 }
 
 /* =========================
@@ -29,124 +29,105 @@ body {
 ========================= */
 .carousel img {
   width: 100%;
-  display: block;
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out; /* animação suave */
+  height: 100%;
+  object-fit: cover;
   position: absolute;
-}
-
-.carousel::before {
-  content: "";
-  display: block;
-  padding-top: 100%; /* mantém formato quadrado (1x1) */
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
 }
 
 .carousel img.active {
   opacity: 1;
+  position: relative;
 }
 
 /* =========================
-   SETAS DE NAVEGAÇÃO
+   SETAS RETANGULARES
 ========================= */
 .arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background: rgba(0,0,0,0.4);
-  border-radius: 50%;
-  cursor: pointer;
-  user-select: none;
-  z-index: 10;
-
-  /* Deixa o símbolo centralizado */
+  width: 30px;
+  height: 70px;
+  background: rgba(180,180,180,0.5); /* cinza 50% */
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 20px;
-  color: white;
+  cursor: pointer;
+  user-select: none;
+  z-index: 5;
+  transition: background 0.2s ease;
+  border-radius: 4px;
+  font-size: 22px;
+  color: #222;
 }
 
-/* Hover mais suave */
 .arrow:hover {
-  background: rgba(0,0,0,0.55);
+  background: rgba(150,150,150,0.7);
 }
 
-/* Setas um pouco pra fora da imagem */
-.left { left: -15px; }
-.right { right: -15px; }
+.left {
+  left: 8px;
+}
+
+.right {
+  right: 8px;
+}
 
 /* =========================
-   BOLINHAS INDICADORAS
+   BOLINHAS
 ========================= */
 .dots {
   text-align: center;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .dot {
-  display: inline-block;
   width: 10px;
   height: 10px;
-  margin: 5px;
-  background: #ccc;
   border-radius: 50%;
+  background: #ccc;
+  display: inline-block;
+  margin: 5px;
   cursor: pointer;
 }
 
 .dot.active {
-  background: #555;
+  background: #666;
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     BLOCO DO CARROSSEL
-========================= -->
 <div class="carousel">
 
-  <!-- SETA ESQUERDA -->
-  <span class="arrow left" onclick="prev()">❮</span>
+  <!-- SETAS -->
+  <div class="arrow left" onclick="prev()">❮</div>
+  <div class="arrow right" onclick="next()">❯</div>
 
-  <!-- SETA DIREITA -->
-  <span class="arrow right" onclick="next()">❯</span>
-
-  <!-- COLE SUAS IMAGENS AQUI -->
-  <!-- IMAGEM 1 (sempre começa com class="active") -->
+  <!-- IMAGENS -->
   <img src="https://lh3.googleusercontent.com/pw/AP1GczOzSn06AuKy9sHtB1eE0agCMuN9BbqLLKVTAU3ioQLeL1RqpH-Xrs0vkU0wevkri-F3iHt0xzwVycKMSWRst7vnikFKhqceAgs541emIaZXdkR0RMl4SI-MB87GI1Lw1ddgu5KdCEaeU3be6Cg2UJ1U=w957-h957-s-no-gm?authuser=0" class="active">
 
-  <!-- IMAGEM 2 -->
   <img src="https://lh3.googleusercontent.com/pw/AP1GczMNmz8xUZdsbJTcsEXoclsHjNK6nUWf7ixqSWoTgc8AVccV9tzPRuc-c5VWTwM0HMf3XrpkDPkxT5LLBWiSaTUJvDEj2GCwscB-StWhIDig-zYsY7xKjdmn2ayTAOy8yv3RfnESCtAnmIKYnIeAZpWT=w957-h957-s-no-gm?authuser=0">
-
-  <!-- IMAGEM 3 (se quiser usar) -->
-  <!-- <img src=""> -->
-
-  <!-- IMAGEM 4 (se quiser usar) -->
-  <!-- <img src=""> -->
 
 </div>
 
-<!-- BOLINHAS ABAIXO DO CARROSSEL -->
+<!-- BOLINHAS -->
 <div class="dots"></div>
 
 <script>
-/* =========================
-   LÓGICA DO CARROSSEL
-========================= */
-
 let index = 0;
 const images = document.querySelectorAll(".carousel img");
 const dotsContainer = document.querySelector(".dots");
 
-/* Criar bolinhas automaticamente */
+/* Criar bolinhas */
 images.forEach((_, i) => {
   const dot = document.createElement("span");
   dot.classList.add("dot");
-
   if (i === 0) dot.classList.add("active");
 
   dot.addEventListener("click", () => {
@@ -168,13 +149,13 @@ function showImage(i) {
   dots[i].classList.add("active");
 }
 
-/* Próxima imagem */
+/* Próxima */
 function next() {
   index = (index + 1) % images.length;
   showImage(index);
 }
 
-/* Imagem anterior */
+/* Anterior */
 function prev() {
   index = (index - 1 + images.length) % images.length;
   showImage(index);
@@ -183,7 +164,6 @@ function prev() {
 /* =========================
    SWIPE NO CELULAR
 ========================= */
-
 let startX = 0;
 const carousel = document.querySelector(".carousel");
 
@@ -195,8 +175,8 @@ carousel.addEventListener("touchend", e => {
   let endX = e.changedTouches[0].clientX;
   let diff = startX - endX;
 
-  if (diff > 50) next();    // arrastou pra esquerda
-  if (diff < -50) prev();   // arrastou pra direita
+  if (diff > 50) next();
+  if (diff < -50) prev();
 });
 </script>
 
